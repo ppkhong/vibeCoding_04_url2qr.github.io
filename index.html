@@ -3,168 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Studio - 간편한 QR코드 생성기</title>
-    <meta name="description" content="URL을 입력하여 고화질 QR코드를 즉시 생성하고 JPG로 다운로드하세요.">
-    <!-- Google Fonts -->
+    <title>QR &amp; Shorten Studio - QR코드 생성 · URL 단축</title>
+    <meta name="description" content="URL을 QR코드로 만들거나, 긴 주소를 짧은 링크로 단축하세요.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
 </head>
-<body class="state-initial">
-    <!-- Ambient Background Lighting -->
+<body>
     <div class="ambient-glow orb-1" aria-hidden="true"></div>
     <div class="ambient-glow orb-2" aria-hidden="true"></div>
     <div class="ambient-glow orb-3" aria-hidden="true"></div>
     <div class="bg-grid-pattern" aria-hidden="true"></div>
 
-    <!-- Top-Left Header with Logo -->
     <header class="app-header">
-        <div class="logo-wrapper" id="logoWrapper" title="QR Code Studio">
-            <img src="img/logo.png" alt="QR Code Studio Logo" class="brand-logo" id="brandLogo" onerror="this.onerror=null; this.src='logo.png';">
+        <div class="logo-wrapper">
+            <img src="img/logo.png" alt="QR &amp; Shorten Studio Logo" class="brand-logo" onerror="this.style.display='none';">
             <div class="brand-badge">
                 <span class="badge-dot"></span>
-                <span>QR Generator</span>
+                <span>Link Toolkit</span>
             </div>
-        </div>
-        <div class="header-actions">
-            <button type="button" class="btn-icon" id="btnReset" title="새로 만들기" style="display: none;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
-                    <path d="M21 3v5h-5"></path>
-                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
-                    <path d="M3 21v-5h5"></path>
-                </svg>
-                <span>초기화</span>
-            </button>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="app-container" id="mainContainer">
-        
-        <!-- Hero Intro (Visible in Initial State) -->
-        <section class="hero-intro" id="heroIntro">
+    <main class="landing-container">
+        <section class="hero-intro">
             <div class="hero-pill">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg>
-                <span>Instant QR Generation</span>
+                <span>One Link, Two Ways</span>
             </div>
             <h1 class="hero-title">
-                원하는 <span class="gradient-text">URL</span>을 입력하면<br>
-                즉시 <span class="gradient-text glow">QR코드</span>가 완성됩니다
+                링크를 <span class="gradient-text">QR코드</span>로<br>
+                또는 <span class="gradient-text glow">짧은 주소</span>로
             </h1>
             <p class="hero-desc">
-                간편하게 URL을 입력하고 클릭 한 번으로 고해상도 JPG 파일로 다운로드하세요.
+                원하는 기능을 선택하세요. 두 가지 도구 모두 설치 없이 브라우저에서 바로 사용할 수 있습니다.
             </p>
         </section>
 
-        <!-- Center QR Code Display Section (Active when generated) -->
-        <section class="qr-display-section" id="qrDisplaySection" aria-live="polite">
-            <div class="qr-card-wrapper">
-                <!-- QR Code Clickable Card -->
-                <div class="qr-card" id="qrCard" role="button" tabindex="0" title="클릭하면 JPG 파일로 다운로드됩니다">
-                    <!-- Hover Tooltip / Action Badge -->
-                    <div class="qr-card-badge">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        <span>클릭하여 JPG 다운로드</span>
-                    </div>
-
-                    <!-- Canvas Render Target -->
-                    <div class="qr-canvas-container" id="qrCanvasContainer">
-                        <!-- QR Code Canvas rendered here -->
-                    </div>
-
-                    <!-- Scan Me Tag -->
-                    <div class="qr-card-footer">
-                        <span class="qr-url-text" id="qrCardUrlText">https://example.com</span>
-                    </div>
-
-                    <!-- Click Ripple Effect Overlay -->
-                    <div class="ripple-overlay" id="rippleOverlay"></div>
+        <section class="feature-grid" aria-label="기능 선택">
+            <a class="feature-card" href="url2qr/index.html" id="cardQr">
+                <div class="feature-glow" aria-hidden="true"></div>
+                <div class="feature-icon icon-qr">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+                        <path d="M14 14h3v3h-3z"></path>
+                        <path d="M21 14v3M21 21h-3M17 21h-3v-3M14 18h-1"></path>
+                    </svg>
                 </div>
-
-                <!-- Action Toolbar below QR Card -->
-                <div class="qr-card-actions">
-                    <button type="button" class="btn-action-primary" id="btnDownloadJpg" title="고화질 JPG 파일 다운로드">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        <span>JPG 다운로드</span>
-                    </button>
-                    <button type="button" class="btn-action-secondary" id="btnCopyUrl" title="입력된 URL 복사">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                        <span>URL 복사</span>
-                    </button>
+                <div class="feature-body">
+                    <h2 class="feature-title">QR코드</h2>
+                    <p class="feature-desc">
+                        URL을 입력하면 즉시 QR코드가 완성됩니다. 고해상도 JPG로 다운로드할 수 있습니다.
+                    </p>
                 </div>
-            </div>
+                <span class="feature-cta">
+                    <span>QR코드 만들기</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </a>
+
+            <a class="feature-card" href="urlShort/index.html" id="cardShort">
+                <div class="feature-glow" aria-hidden="true"></div>
+                <div class="feature-icon icon-short">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                </div>
+                <div class="feature-body">
+                    <h2 class="feature-title">URL단축</h2>
+                    <p class="feature-desc">
+                        길고 복잡한 주소를 한 번의 클릭으로 짧은 링크로 바꾸고 바로 복사하세요.
+                    </p>
+                </div>
+                <span class="feature-cta">
+                    <span>URL 단축하기</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </span>
+            </a>
         </section>
 
-        <!-- Floating / Sliding URL Input Component -->
-        <section class="url-input-section" id="urlInputSection">
-            <form class="url-form" id="urlForm" autocomplete="off" onsubmit="return false;">
-                <div class="input-glow-bar"></div>
-                <div class="input-inner-wrapper">
-                    <div class="input-icon-left" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                        </svg>
-                    </div>
-
-                    <input 
-                        type="text" 
-                        id="urlInput" 
-                        class="url-input-field" 
-                        placeholder="변환할 웹사이트 URL 또는 텍스트를 입력하세요 (예: google.com)" 
-                        aria-label="URL 입력창" 
-                        spellcheck="false" 
-                        autofocus
-                    >
-
-                    <button type="button" class="btn-clear-input" id="btnClearInput" title="내용 지우기" aria-label="입력 내용 지우기">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-
-                    <button type="submit" class="btn-submit" id="btnSubmit">
-                        <span>확인</span>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Quick Preset URL Chips (shown in initial state) -->
-                <div class="preset-chips" id="presetChips">
-                    <span class="preset-label">빠른 예시:</span>
-                    <button type="button" class="chip-item" data-url="https://www.google.com">Google</button>
-                    <button type="button" class="chip-item" data-url="https://www.naver.com">Naver</button>
-                    <button type="button" class="chip-item" data-url="https://www.youtube.com">YouTube</button>
-                    <button type="button" class="chip-item" data-url="https://github.com">GitHub</button>
-                </div>
-            </form>
-        </section>
-
+        <p class="landing-footnote">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            <span>모든 작업은 브라우저에서 처리되며 입력한 URL은 저장되지 않습니다.</span>
+        </p>
     </main>
-
-    <!-- Toast Notification -->
-    <div class="toast-container" id="toastContainer" aria-live="assertive"></div>
-
-    <!-- Scripts -->
-    <script src="js/qrcode.min.js"></script>
-    <script src="js/app.js"></script>
 </body>
 </html>
