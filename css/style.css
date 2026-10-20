@@ -1,0 +1,841 @@
+/* ==========================================================================
+   Design Tokens & CSS Variables
+   ========================================================================== */
+:root {
+    --bg-main: #0a0d16;
+    --bg-secondary: #111728;
+    --bg-glass: rgba(17, 24, 39, 0.7);
+    --bg-glass-strong: rgba(15, 23, 42, 0.85);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --border-glow: rgba(99, 102, 241, 0.35);
+
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --primary-light: #818cf8;
+    --accent-cyan: #06b6d4;
+    --accent-violet: #a855f7;
+    --accent-emerald: #10b981;
+
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-full: 9999px;
+
+    --shadow-subtle: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.6), 0 0 40px -10px rgba(99, 102, 241, 0.25);
+    --shadow-glow: 0 0 35px rgba(99, 102, 241, 0.4);
+
+    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-fast: all 0.2s ease-out;
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: var(--font-body);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   Ambient Background Lighting & Grids
+   ========================================================================== */
+.bg-grid-pattern {
+    position: fixed;
+    inset: 0;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 85%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.ambient-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.45;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.35), transparent 70%);
+    top: 5%;
+    left: 10%;
+}
+
+.orb-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.25), transparent 70%);
+    bottom: 10%;
+    right: 10%;
+    animation-delay: -6s;
+}
+
+.orb-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%);
+    top: 40%;
+    right: 35%;
+    animation-delay: -12s;
+}
+
+@keyframes floatOrb {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, -30px) scale(1.1); }
+    100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+/* ==========================================================================
+   Header & Top-Left Logo
+   ========================================================================== */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 40;
+    background: linear-gradient(180deg, rgba(10, 13, 22, 0.8) 0%, rgba(10, 13, 22, 0) 100%);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.logo-wrapper:hover .brand-logo {
+    transform: scale(1.03);
+    filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.4));
+}
+
+.brand-logo {
+    height: 38px;
+    width: auto;
+    max-width: 180px;
+    object-fit: contain;
+    transition: var(--transition-fast);
+}
+
+.brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--primary-light);
+    text-transform: uppercase;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accent-emerald);
+    box-shadow: 0 0 8px var(--accent-emerald);
+    animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: var(--transition-fast);
+}
+
+.btn-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Main App Container
+   ========================================================================== */
+.app-container {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: 90px 1.5rem 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   Hero Intro Section (Initial State)
+   ========================================================================== */
+.hero-intro {
+    text-align: center;
+    max-width: 680px;
+    margin-bottom: 2.5rem;
+    transition: var(--transition-smooth);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent-cyan);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #a5b4fc 0%, #6366f1 50%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text.glow {
+    filter: drop-shadow(0 0 25px rgba(99, 102, 241, 0.45));
+}
+
+.hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* State Change: When QR is Generated */
+body.state-generated .hero-intro {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+    max-height: 0;
+    margin-bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Center QR Code Display Section
+   ========================================================================== */
+.qr-display-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0;
+    transition: var(--transition-smooth);
+}
+
+/* Initial state: Hidden */
+body.state-initial .qr-display-section {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px);
+    max-height: 0;
+    pointer-events: none;
+    overflow: hidden;
+    margin: 0;
+}
+
+/* Generated state: Centered and Revealed */
+body.state-generated .qr-display-section {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    max-height: 700px;
+    pointer-events: auto;
+    margin: auto 0 4rem 0;
+}
+
+.qr-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+    animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Clickable Interactive QR Card */
+.qr-card {
+    position: relative;
+    background: var(--bg-glass-strong);
+    border: 1px solid var(--border-glow);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem 1.75rem 1.5rem;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    cursor: pointer;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    user-select: none;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: rgba(99, 102, 241, 0.7);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 50px rgba(99, 102, 241, 0.45);
+}
+
+.qr-card:active {
+    transform: scale(0.98);
+}
+
+.qr-card:focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 4px;
+}
+
+/* Download Badge on Hover */
+.qr-card-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.85), rgba(6, 182, 212, 0.85));
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+    transition: var(--transition-fast);
+    z-index: 5;
+}
+
+.qr-card:hover .qr-card-badge {
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.5);
+}
+
+/* Canvas Container with clean white background */
+.qr-canvas-container {
+    width: 256px;
+    height: 256px;
+    background: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 2;
+}
+
+.qr-canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: var(--radius-sm);
+    display: block;
+}
+
+/* QR Card Footer with URL preview */
+.qr-card-footer {
+    margin-top: 1.25rem;
+    width: 100%;
+    max-width: 256px;
+    text-align: center;
+}
+
+.qr-url-text {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Click Ripple effect */
+.ripple-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 10%, transparent 70%);
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.qr-card.ripple-active .ripple-overlay {
+    opacity: 1;
+    transform: scale(2.5);
+    transition: 0s;
+}
+
+/* QR Action Toolbar */
+.qr-card-actions {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+}
+
+.btn-action-primary,
+.btn-action-secondary {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-action-primary {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(99, 102, 241, 0.4);
+}
+
+.btn-action-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+}
+
+.btn-action-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-primary);
+    backdrop-filter: blur(10px);
+}
+
+.btn-action-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Sliding URL Input Section (Center -> Bottom Transition)
+   ========================================================================== */
+.url-input-section {
+    width: 100%;
+    max-width: 680px;
+    z-index: 30;
+    transition: var(--transition-smooth);
+}
+
+/* Initial State: Centered below Hero */
+body.state-initial .url-input-section {
+    position: relative;
+    margin-top: 0;
+    transform: translateY(0);
+}
+
+/* Generated State: Docked smoothly at the Bottom */
+body.state-generated .url-input-section {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 3rem);
+    max-width: 650px;
+    animation: dockBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dockBottom {
+    0% {
+        transform: translate(-50%, 60px);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+.url-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+.input-inner-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--bg-glass-strong);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-xl);
+    padding: 8px 10px 8px 20px;
+    box-shadow: 0 12px 35px -5px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.1);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition: var(--transition-fast);
+}
+
+.input-inner-wrapper:focus-within {
+    border-color: rgba(99, 102, 241, 0.7);
+    box-shadow: 0 16px 45px -5px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.35);
+}
+
+.input-icon-left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    margin-right: 12px;
+    transition: var(--transition-fast);
+}
+
+.input-inner-wrapper:focus-within .input-icon-left {
+    color: var(--primary-light);
+}
+
+.url-input-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.url-input-field::placeholder {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Clear button inside input */
+.btn-clear-input {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-fast);
+    margin-right: 6px;
+}
+
+.btn-clear-input.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.btn-clear-input:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Submit Confirmation Button */
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-lg);
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+    transition: var(--transition-fast);
+    white-space: nowrap;
+}
+
+.btn-submit:hover {
+    background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+    transform: translateY(-1px);
+}
+
+.btn-submit:active {
+    transform: scale(0.97);
+}
+
+/* Preset Chips (Initial State) */
+.preset-chips {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    transition: var(--transition-smooth);
+}
+
+body.state-generated .preset-chips {
+    display: none;
+}
+
+.preset-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.chip-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.chip-item:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Toast Notification
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.toast {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(99, 102, 241, 0.4);
+    border-radius: var(--radius-full);
+    color: #ffffff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.3);
+    backdrop-filter: blur(12px);
+    animation: toastSlideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast.toast-leave {
+    animation: toastFadeOut 0.3s ease-in forwards;
+}
+
+.toast-icon-success {
+    color: var(--accent-emerald);
+}
+
+.toast-icon-info {
+    color: var(--accent-cyan);
+}
+
+@keyframes toastSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes toastFadeOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+}
+
+/* ==========================================================================
+   Animations & Keyframes
+   ========================================================================== */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
+@keyframes popRefresh {
+    0% { transform: scale(0.95); opacity: 0.7; }
+    50% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 0 30px rgba(99, 102, 241, 0.6)); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.qr-card.pop-refresh {
+    animation: popRefresh 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 640px) {
+    .app-header {
+        padding: 0 1rem;
+        height: 64px;
+    }
+
+    .brand-logo {
+        height: 32px;
+    }
+
+    .brand-badge {
+        display: none;
+    }
+
+    .app-container {
+        padding: 80px 1rem 120px;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+    }
+
+    .qr-canvas-container {
+        width: 220px;
+        height: 220px;
+    }
+
+    body.state-generated .url-input-section {
+        bottom: 1rem;
+        width: calc(100% - 1.5rem);
+    }
+
+    .btn-submit span {
+        display: none;
+    }
+
+    .btn-submit {
+        padding: 12px 16px;
+    }
+}
